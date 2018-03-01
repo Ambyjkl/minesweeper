@@ -327,7 +327,7 @@
       clearInterval(interval);
     }
     time = 0;
-    timer.innerText = '000';
+    timer.innerText = '!!!';
     notStarted = true;
   }
   function open(cell) {
