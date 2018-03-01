@@ -1,0 +1,14 @@
+{
+  "name": "minesweeper",
+  "version": "1.0.0",
+  "description": "minesweeper",
+  "main": "index.js",
+  "scripts": {
+    "start": "xdg-open index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dseg": "^0.43.0"
+  }
+}
