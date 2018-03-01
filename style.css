@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'DSEG7-Modern';
-  src: url('./node_modules/dseg/fonts/DSEG7-Modern/DSEG7Modern-Bold.woff2') format('woff2'),
-  url('./node_modules/dseg/fonts/DSEG7-Modern/DSEG7Modern-Bold.woff') format('woff'),
-  url('./node_modules/dseg/fonts/DSEG7-Modern/DSEG7Modern-Bold.ttf') format('truetype');
+  src: url('./fonts/DSEG7-Modern/DSEG7Modern-Bold.woff2') format('woff2'),
+  url('./fonts/DSEG7-Modern/DSEG7Modern-Bold.woff') format('woff'),
+  url('./fonts/DSEG7-Modern/DSEG7Modern-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
@@ -21,8 +21,6 @@ button {
 }
 .row {
   display: flex;
-}
-.center {
   justify-content: center;
 }
 .top,
