@@ -1,5 +1,6 @@
 (() => {
-  const { boardDiv,
+  const {
+    boardTab,
     flag,
     mineCounter,
     reset,
@@ -32,22 +33,22 @@
       mineInput.value = '';
     }
   };
-  boardDiv.onmouseleave = () => {
+  boardTab.addEventListener('mouseleave', () => {
     if (mousedown) {
       mousedown = false;
       unhandleDown(activeCell);
       reset.className = 'smile';
     }
-  };
-  flag.onmousedown = () => {
+  }, { capture: false, passive: true });
+  flag.addEventListener('mousedown', () => {
     flag.classList.toggle('clicking');
-  };
+  }, { capture: false, passive: true });
   let primary = 1;
   let secondary = 3;
   let which = 0;
-  flag.onmouseup = () => {
+  flag.addEventListener('mouseup', () => {
     primary = secondary + (secondary = primary, 0);
-  };
+  }, { capture: false, passive: true });
   const colors = {
     1: 'blue',
     2: 'green',
@@ -108,19 +109,18 @@
       const frag = document.createDocumentFragment();
       for (i = 0; i < diffH; i++) {
         const row = [];
-        const div = document.createElement('div');
-        div.className = 'row';
+        const tr = document.createElement('tr');
         for (j = 0; j < width; j++) {
           const cell = createCell(i + height, j);
           row.push(cell);
           const el = createEl(cell);
-          div.appendChild(el);
+          tr.appendChild(el);
         }
-        frag.appendChild(div);
-        domRows.push(div);
+        frag.appendChild(tr);
+        domRows.push(tr);
         board.push(row);
       }
-      boardDiv.appendChild(frag);
+      boardTab.appendChild(frag);
     } else if (diffH < 0) {
       domRows.splice(newHeight).forEach(el => el.remove());
       board.length = newHeight;
@@ -133,7 +133,7 @@
     remainingFlags = newNMines;
     checkWin();
   }
-  window.onkeydown = e => {
+  window.addEventListener('keydown', e => {
     if (e.ctrlKey) {
       switch (e.code) {
       case 'KeyR':
@@ -143,7 +143,7 @@
         break;
       }
     }
-  };
+  }, { capture: false, passive: true });
   const around = cell => {
     const { row, col } = cell;
     const rowMin = row > 0;
@@ -229,29 +229,27 @@
   initMines();
   const domRows = [];
   function createEl(cell) {
-    const el = document.createElement('div');
+    const el = document.createElement('td');
     cell.el = el;
-    el.className = 'cell';
-    el.onmouseup = () => handleUp(cell);
-    el.onmousedown = e => handleDown(e, cell);
-    el.onmouseenter = () => handleIn(cell);
+    el.addEventListener('mouseup', () => handleUp(cell), { capture: false, passive: true });
+    el.addEventListener('mousedown', e => handleDown(e, cell), { capture: false, passive: true });
+    el.addEventListener('mouseenter', () => handleIn(cell), { capture: false, passive: true });
     return el;
   }
   const frag = document.createDocumentFragment();
   for (i = 0; i < height; i++) {
-    const div = document.createElement('div');
-    div.className = 'row';
+    const tr = document.createElement('tr');
     for (j = 0; j < width; j++) {
       const cell = board[i][j];
       const el = createEl(cell);
-      div.appendChild(el);
+      tr.appendChild(el);
     }
-    frag.appendChild(div);
-    domRows.push(div);
+    frag.appendChild(tr);
+    domRows.push(tr);
   }
-  boardDiv.appendChild(frag);
-  boardDiv.oncontextmenu = () => false;
-  boardDiv.onselectstart = () => false;
+  boardTab.appendChild(frag);
+  boardTab.oncontextmenu = () => false;
+  boardTab.onselectstart = () => false;
 
   class Queue {
     constructor(...items) {
@@ -315,7 +313,7 @@
         cell.mine = false;
         cell.value = 0;
         cell.el.innerText = '';
-        cell.el.className = 'cell';
+        cell.el.className = '';
       }
     }
     flagged.clear();
@@ -400,9 +398,9 @@
     cell.el.classList.add('highlight');
   }
   const flagged = new Set();
-  reset.onmousedown = () => {
+  reset.addEventListener('mousedown', () => {
     reset.classList.add('clicking');
-  };
+  }, { capture: false, passive: true });
   function reinit() {
     if (newHighscoreCelebrate) {
       clearInterval(newHighscoreCelebrate);
@@ -413,10 +411,10 @@
     remaining = height * width - nMines;
     remainingFlags = nMines;
   }
-  reset.onmouseup = () => {
+  reset.addEventListener('mouseup', () => {
     reset.classList.remove('clicking');
     reinit();
-  };
+  }, { capture: false, passive: true });
   function handleIn(cell) {
     if (mousedown === false) return;
     unhandleDown(activeCell);
